@@ -14,6 +14,10 @@ on:
   repository_dispatch:
   workflow_dispatch:
     inputs:
+      useCache:
+        description: 'Cache'
+        required: false
+        default: 'true'
       ssh:
         description: 'SSH connection to Actions'
         required: false
@@ -63,6 +67,7 @@ jobs:
 
     - name: Cache
       uses: klever1988/cachewrtbuild@main
+      if: github.event.inputs.useCache == 'true' && github.event.inputs.useCache  != 'false'
       with:
         ccache: 'true'
         prefix: ${{ github.workspace }}/openwrt
